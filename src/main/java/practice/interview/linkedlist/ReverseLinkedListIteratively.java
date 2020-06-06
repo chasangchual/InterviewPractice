@@ -1,6 +1,6 @@
 package practice.interview.linkedlist;
 
-public class ReverseLinkedList {
+public class ReverseLinkedListIteratively {
     public Node<Integer> reverse(Node<Integer> head) {
         Node prev = head ;
         Node curr = head.getNext();
@@ -34,7 +34,7 @@ public class ReverseLinkedList {
 
         //ReverseLinkedList.traverse(head);
 
-        ReverseLinkedList reverseLinkedList = new ReverseLinkedList();
-        ReverseLinkedList.traverse(reverseLinkedList.reverse(head));
+        ReverseLinkedListIteratively reverseLinkedList = new ReverseLinkedListIteratively();
+        ReverseLinkedListIteratively.traverse(reverseLinkedList.reverse(head));
     }
 }
