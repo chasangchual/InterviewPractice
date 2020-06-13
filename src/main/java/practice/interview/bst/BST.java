@@ -45,4 +45,44 @@ public class BST {
             this.right = right;
         }
     }
+
+    public static BST getFullBalancedTree() {
+        BST bst = new BST();
+
+        bst.add(20);
+        bst.add(10);
+        bst.add(3);
+        bst.add(17);
+        bst.add(2);
+        bst.add(4);
+        bst.add(16);
+        bst.add(18);
+        bst.add(30);
+        bst.add(23);
+        bst.add(37);
+        bst.add(22);
+        bst.add(24);
+        bst.add(36);
+        bst.add(38);
+
+        return bst;
+    }
+
+    public static BST getSparseTree() {
+        BST bst = new BST();
+
+        bst = new BST();
+
+        bst.add(20);
+        bst.add(10);
+        bst.add(3);
+        bst.add(17);
+        bst.add(16);
+        bst.add(18);
+        bst.add(30);
+        bst.add(37);
+        bst.add(36);
+
+        return bst;
+    }
 }
