@@ -9,8 +9,5 @@
         <module name="interview" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="interview" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>
