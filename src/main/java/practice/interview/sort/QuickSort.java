@@ -40,7 +40,7 @@ public class QuickSort {
     public static int partition(int from, int to, int[] values) {
         int rightBound = to - 1;
         int leftBound = from;
-        int pivot = values[to];
+        int pivot = values[to]; // pick the last element as a pivot
 
         // run until the bounds are crossed
         while(rightBound > leftBound) {
@@ -52,7 +52,8 @@ public class QuickSort {
                 leftBound ++;
             }
 
-            // if the both bounds are not crossed, swap
+            // if the both bounds are not crossed yet, do swap left and right
+            // else, change the pivot and left bound
             if(rightBound > leftBound) {
                 swap(values, leftBound, rightBound);
             } else {
