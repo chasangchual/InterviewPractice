@@ -2,43 +2,87 @@ package practice.interview.sort;
 
 import java.util.Arrays;
 
+/**
+ * https://tobinatore.github.io/algovis/quicksort.html
+ */
 public class QuickSort {
-    void sort(int[] in, int start, int end) {
-        if(end > start) {
-            int v = partition(in, start, end);
-            sort(in, start, v-1);
-            sort(in, v+1, end);
-        }
+    public static void doSort(int[] values) {
+        printArray(values);
+        System.out.println("------> ");
+
+        // quickSort(values, 0, values.length - 1);
+        doQuickSort(0, 0, values.length - 1, values);
+        System.out.println("***************");
     }
-    int partition(int[] arr, int start, int end) {
-        int pivot = arr[(end + start) / 2];
 
-        int s = start;
-        int e = end;
+    public static void doQuickSort(int p, int l, int r, int[] values) {
+        if(r > l) {
+            if((r - l + 1) == 2) {
+                if(values[l] > values[r]) {
+                    swap(values, r, l);
+                }
 
-        while(s < e) {
-            while (arr[s] < pivot) s++;
-            while (arr[e] > pivot) e--;
+                printArray(values);
 
-            if(s < e) {
-                int swap = arr[e];
-                arr[e] = arr[s];
-                arr[s] = swap;
+            } else {
 
-                s++;
-                e--;
+                int pi = partition(l, r, values);
+
+                printArray(values);
+
+                // set the pivot index as the first item in the array
+                doQuickSort(l, l, pi - 1, values);
+                doQuickSort(pi+1, pi+1, r, values);
             }
         }
+    }
 
-        return s;
+    public static int partition(int from, int to, int[] values) {
+        int rightBound = to - 1;
+        int leftBound = from;
+        int pivot = values[to];
+
+        // run until the bounds are crossed
+        while(rightBound > leftBound) {
+            while(rightBound >= from && values[rightBound] >= pivot) {
+                rightBound --;
+            }
+
+            while(leftBound <= (to - 1) && values[leftBound] <= pivot) {
+                leftBound ++;
+            }
+
+            // if the both bounds are not crossed, swap
+            if(rightBound > leftBound) {
+                swap(values, leftBound, rightBound);
+            } else {
+                swap(values, leftBound, to);
+            }
+        }
+        return leftBound;
+    }
+
+    private static void printArray(int[] values) {
+        System.out.println(Arrays.toString(values));
+    }
+    private static void swap(int[] values, int from, int to) {
+        if(from != to) {
+            int temp = values[from];
+            values[from] = values[to];
+            values[to] = temp;
+        }
     }
 
     public static void main(String[] args) {
-        // int[] arr = {4, 9, 3, 10, 93, 1, 23, 2 ,34, 90, 87, 65, 38};
-        int[] arr = {5, 4, 3, 2, 1};
-        QuickSort quickSort = new QuickSort();
-        quickSort.sort(arr, 0, arr.length-1);
+        QuickSort.doSort(new int[]{5, 1, 8, 9, 7, 2, 4, 3, 11, 6, 10});
+        // QuickSort.doSort(new int[]{3, 4});
+        // QuickSort.doSort(new int[]{4, 3});
 
-        System.out.println(Arrays.toString(arr));
+        QuickSort.doSort(new int[]{1, 2, 3});
+        QuickSort.doSort(new int[]{2, 1, 3});
+        QuickSort.doSort(new int[]{3, 2, 1});
+
+        // QuickSort.doSort(new int[]{1, 2, 3, 4, 5});
+        // QuickSort.doSort(new int[]{5, 4, 3, 2, 1});
     }
 }
