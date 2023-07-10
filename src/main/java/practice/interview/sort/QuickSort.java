@@ -53,7 +53,7 @@ public class QuickSort {
             }
 
             // if the both bounds are not crossed yet, do swap left and right
-            // else, change the pivot and left bound
+            // else, change the pivot and left bound. Left bound is the final pivot position
             if(rightBound > leftBound) {
                 swap(values, leftBound, rightBound);
             } else {
