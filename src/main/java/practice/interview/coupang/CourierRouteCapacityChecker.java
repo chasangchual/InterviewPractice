@@ -19,4 +19,7 @@ package practice.interview.coupang;
  * 	•	Prioritize same-zone reassignment
  */
 public class CourierRouteCapacityChecker {
+    record Delivery(int routeId, int stopId, int package_count) {};
+
+
 }
