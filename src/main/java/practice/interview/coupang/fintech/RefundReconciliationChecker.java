@@ -54,7 +54,7 @@ public class RefundReconciliationChecker {
     record ReconcilationResult(int refundId, ReconconcilationError error) {
         @Override
         public String toString() {
-            String.format("%d, %s", refundId, error.toString())
+            return String.format("%d, %s", refundId, error.toString());
         }
     };
 
@@ -82,12 +82,11 @@ public class RefundReconciliationChecker {
     );
 
     public List<ReconcilationResult> runReconciliation() {
-        Map<int, Order> orders = this.
-        return List.of();
+        return null;
     }
 
     public static void main(String[] args) {
         RefundReconciliationChecker refundReconciliationChecker = new RefundReconciliationChecker();
-        System.out.println(refundReconciliationChecker.runReconciliation());
+        System.out.println(List.of(refundReconciliationChecker.runReconciliation()));
     }
 }
