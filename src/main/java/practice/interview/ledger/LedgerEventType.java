@@ -1,0 +1,11 @@
+package practice.interview.ledger;
+
+public enum LedgerEventType {
+    ACCOUNT_CREATE,
+    DEPOSIT_REQUESTED,
+    DEPOSIT_CONFIRMED,
+    WITHDRAW_REQUESTED,
+    WITHDRAW_CONFIRMED,
+    TRANSFER_REQUESTED,
+    TRANSFER_CONFIRMED,
+}
