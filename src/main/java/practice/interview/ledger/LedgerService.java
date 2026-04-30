@@ -62,5 +62,22 @@ public class LedgerService {
         ledgerService.deposit(1, 10d);
         UserAccount userAccount1 = ledgerService.findUsrAccount(1);
         System.out.println(userAccount1.getBalance());
+
+        ledgerService.deposit(1, 10d);
+        System.out.println(userAccount1.getBalance());
+
+        ledgerService.deposit(2, 30d);
+        ledgerService.deposit(2, 30d);
+        UserAccount userAccount2 = ledgerService.findUsrAccount(2);
+        System.out.println(userAccount2.getBalance());
+
+        ledgerService.withdraw(1, 5d);
+        ledgerService.withdraw(2, 15d);
+        System.out.println(userAccount1.getBalance());
+        System.out.println(userAccount2.getBalance());
+
+        ledgerService.transfer(2, 1, 10d);
+        System.out.println(userAccount1.getBalance());
+        System.out.println(userAccount2.getBalance());
     }
 }

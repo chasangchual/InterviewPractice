@@ -23,6 +23,7 @@ public class UserTransaction implements Comparable<UserTransaction>{
         this.type = type;
         this.ledgerCommands = new PriorityQueue<>();
         this.state = State.CREATED;
+        this.createdAt = LocalDateTime.now();
     }
 
     public void setState(State state) {

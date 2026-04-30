@@ -13,4 +13,8 @@ public class LedgerWithdrawConfirmCommand extends LedgerCommand {
         super(userTransaction, LedgerEventType.WITHDRAW_CONFIRMED);
         this.amount = amount;
     }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
 }

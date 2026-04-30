@@ -6,12 +6,17 @@ import practice.interview.ledger.transaction.UserTransaction;
 import java.math.BigDecimal;
 
 public class LedgerTransferOutRequestCommand extends LedgerCommand {
-    private final BigDecimal amout;
+    private final BigDecimal amount;
 
     public LedgerTransferOutRequestCommand(
             UserTransaction userTransaction,
-            BigDecimal amout) {
+            BigDecimal amount) {
         super(userTransaction, LedgerEventType.TRANSFER_OUT_REQUESTED);
-        this.amout = amout;
+        this.amount = amount;
     }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
 }
