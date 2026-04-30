@@ -1,24 +1,32 @@
 package practice.interview.ledger;
 
+import practice.interview.ledger.transaction.*;
+
 import java.math.BigDecimal;
-import java.util.Map;
-import java.util.PriorityQueue;
 
 public class LedgerService {
-    UserAccountRepossitory userAccountService = UserAccountRepossitory.getInstance();
+    UserAccountRepossitory userAccountRepository = UserAccountRepossitory.getInstance();
     UserTransactionRepository userTransactionRepository = UserTransactionRepository.getInstance();
+
+    public Boolean createUsrAccount(Integer accountId) {
+        return  userAccountRepository.add(accountId).isPresent();
+    }
+
+    public UserAccount findUsrAccount(Integer accountId) {
+        return  userAccountRepository.find(accountId).orElseThrow(() -> new IllegalMonitorStateException(""));
+    }
 
     public Boolean deposit(Integer accountId, Double amount) {
         UserAccount userAccount = getUserAccount(accountId);
         UserTransaction userTransaction = new UserDepositTransaction(userAccount, BigDecimal.valueOf(amount));
-        userTransactionRepository.newTransaction(userAccount, userTransaction);
+        userTransactionRepository.triggerTransaction(userAccount, userTransaction);
         return false;
 
     }
     public Boolean withdraw(Integer accountId, Double amount) {
         UserAccount userAccount = getUserAccount(accountId);
         UserTransaction userTransaction = new UserWithDrawTransaction(userAccount, BigDecimal.valueOf(amount));
-        userTransactionRepository.newTransaction(userAccount, userTransaction);
+        userTransactionRepository.triggerTransaction(userAccount, userTransaction);
         return false;
     }
     public Boolean transfer(Integer fromAccountId, Integer toAccountId, Double  amount) {
@@ -26,7 +34,7 @@ public class LedgerService {
         UserAccount toUserAccount = getUserAccount(toAccountId);
         UserTransaction userTransaction = new UserTransferTransaction(fromUserAccount, toUserAccount, BigDecimal.valueOf(amount));
 
-        userTransactionRepository.newTransaction(fromUserAccount, userTransaction);
+        userTransactionRepository.triggerTransaction(fromUserAccount, userTransaction);
         return false;
 
     }
@@ -41,8 +49,18 @@ public class LedgerService {
     }
 
     private UserAccount getUserAccount(Integer accountId) {
-        return userAccountService.find(accountId).orElseThrow(
+        return userAccountRepository.find(accountId).orElseThrow(
                 () -> new RuntimeException(String.format("User account: %d is not found", accountId))
         );
+    }
+
+    public static void main(String[] args) {
+        LedgerService ledgerService = new LedgerService();
+        ledgerService.createUsrAccount(1);
+        ledgerService.createUsrAccount(2);
+
+        ledgerService.deposit(1, 10d);
+        UserAccount userAccount1 = ledgerService.findUsrAccount(1);
+        System.out.println(userAccount1.getBalance());
     }
 }

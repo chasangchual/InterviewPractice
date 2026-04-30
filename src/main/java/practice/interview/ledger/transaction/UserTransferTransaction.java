@@ -1,8 +1,9 @@
-package practice.interview.ledger;
+package practice.interview.ledger.transaction;
+
+import practice.interview.ledger.UserAccount;
+import practice.interview.ledger.UserAccountTransactionType;
 
 import java.math.BigDecimal;
-import java.util.PriorityQueue;
-import java.util.UUID;
 
 public class UserTransferTransaction extends UserTransaction {
     private BigDecimal amount;
@@ -15,5 +16,9 @@ public class UserTransferTransaction extends UserTransaction {
 
         this.fromUserAccount = fromUserAccount;
         this.toUserAccount = toUserAccount;
+    }
+
+    public BigDecimal getAmount() {
+        return this.amount;
     }
 }
