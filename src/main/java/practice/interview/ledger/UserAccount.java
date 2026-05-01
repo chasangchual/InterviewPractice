@@ -1,19 +1,22 @@
 package practice.interview.ledger;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class UserAccount {
-    protected Integer accountId;
+    protected final Integer accountId;
     protected BigDecimal balance;
+    protected final LocalDateTime createdAt;
 
     public UserAccount(Integer accountId) {
-        this.balance = BigDecimal.ZERO;
+        this(accountId, BigDecimal.ZERO);
     }
 
     public UserAccount(Integer accountId, BigDecimal balance) {
         this.accountId = accountId;
         this.balance = balance;
+        createdAt = LocalDateTime.now();
     }
 
     @Override
@@ -44,5 +47,9 @@ public class UserAccount {
     public BigDecimal decreaseBalance(BigDecimal amount) {
         this.balance = this.balance.subtract(amount);
         return this.balance;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 }

@@ -5,7 +5,7 @@ import practice.interview.ledger.transaction.*;
 import java.math.BigDecimal;
 
 public class LedgerService {
-    UserAccountRepossitory userAccountRepository = UserAccountRepossitory.getInstance();
+    UserAccountRepository userAccountRepository = UserAccountRepository.getInstance();
     UserTransactionRepository userTransactionRepository = UserTransactionRepository.getInstance();
 
     public Boolean createUsrAccount(Integer accountId) {

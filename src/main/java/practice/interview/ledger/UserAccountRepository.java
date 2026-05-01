@@ -3,19 +3,22 @@ package practice.interview.ledger;
 import java.math.BigDecimal;
 import java.util.*;
 
-public class UserAccountRepossitory {
-    private static final Comparator<UserAccount> BY_BALANCE = Comparator.comparing()
+public class UserAccountRepository {
+    private static final Comparator<UserAccount> BY_BALANCE = Comparator.comparing(UserAccount::getBalance);
+    private static final Comparator<UserAccount> BY_CREATED_AT  = Comparator.comparing(UserAccount::getCreatedAt);
+    private static final Comparator<UserAccount> BY_BALANCE_AND_CREATED_AT = Comparator.comparing(UserAccount::getBalance)
+            .thenComparing(UserAccount::getCreatedAt);
 
-    private static UserAccountRepossitory instance = null ;
+    private static UserAccountRepository instance = null ;
     private Map<Integer, UserAccount> userAccounts = null ;
-    public static UserAccountRepossitory getInstance() {
+    public static UserAccountRepository getInstance() {
         if(Objects.isNull(instance)) {
-            instance = new UserAccountRepossitory();
+            instance = new UserAccountRepository();
         }
         return instance;
     }
 
-    private UserAccountRepossitory() {
+    private UserAccountRepository() {
         this.userAccounts = new HashMap<>();
     }
 
@@ -37,6 +40,10 @@ public class UserAccountRepossitory {
     public Optional<UserAccount> find(Integer accountId) {
         return Objects.nonNull(userAccounts.get(accountId)) ? Optional.of(userAccounts.get(accountId))
                 : Optional.empty();
+    }
+
+    public List<UserAccount> findAll() {
+        return userAccounts.entrySet().stream().map(e -> e.getValue()).sorted(BY_CREATED_AT).toList();
     }
 
     public Boolean exist(Integer accountId) {
