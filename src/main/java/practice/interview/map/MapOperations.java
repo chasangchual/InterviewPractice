@@ -15,12 +15,12 @@ public class MapOperations {
 
         // user3 is null
         User user3 = users.computeIfAbsent(2, k -> new User(k, "3"));
-        // user4 is what added in the preivous line
+        // user4 is what added in the previous line
         User user4 = users.computeIfAbsent(2, k -> new User(k, "4"));
 
         // user5 is null
         User user5 = users.computeIfPresent(3, (k , v) -> new User(k, "5"));
-        // user6 is what added in the preivous line
+        // user6 is what added in the previous line
         User user6 = users.computeIfPresent(3, (k , v) -> new User(k, "6"));
     }
 }
