@@ -15,7 +15,7 @@ public class PaymentProcessor {
         INVALID
     }
 
-    class Payment() {
+    class Payment {
         private final UUID id;
         private final Integer accountId;
         private final Integer merchantId;
@@ -41,8 +41,13 @@ public class PaymentProcessor {
         public Integer getAccountId() {
             return this.accountId;
         }
+
         public Integer getMerchantId() {
             return this.merchantId;
+        }
+
+        public BigDecimal getAmount() {
+            return this.amount;
         }
 
         public State getState() {
@@ -88,18 +93,33 @@ public class PaymentProcessor {
             }
 
             payments.put(payment.getId(), payment);
+            Objects.requireNonNull(userPayments.putIfAbsent(payment.getAccountId(), new ArrayList<>())).add(payment.getId());
+            Objects.requireNonNull(merchantPayments.putIfAbsent(payment.getAccountId(), new ArrayList<>())).add(payment.getId());
 
-            userPayments.putIfAbsent(payment.getAccountId(), new ArrayList<>());
-            userPayments.put(payment.getAccountId(), )
-            payment.setState(State.PROCESSED);
+            //userPayments.put(payment.getAccountId(), )
+
+        payment.setState(State.PROCESSED);
         } catch (Exception e) {
-
+            return Boolean.FALSE;
         } finally {
             // delete the payment is in REQUESTED state
         }
+        return Boolean.FALSE;
     }
 
     private Boolean isGoodToGo(Payment payment) {
+        // get the payments of the user happened before and sort by timestam
+        final List<UUID> paymentsForUser = userPayments.get(payment.accountId);
+        if(Objects.nonNull(paymentsForUser)) {
+            var found = payments.entrySet().stream().filter(e -> paymentsForUser.contains(e.getKey()))
+                    .filter(e -> !e.getValue().timestamp.isAfter(payment.getTimestamp()) &&  e.getValue().getTimestamp().plusSeconds(10).isAfter(payment.getTimestamp()))
+                    .map(Map.Entry::getValue).toList();
+            if(!found.isEmpty() &&
+                    found.get(found.size() -1).getMerchantId().equals(payment.getAccountId()) &&
+                    found.get(found.size() -1).getAmount().equals(payment.getAmount())) {
+                return  false;
+            }
+        }
         return false;
     }
 }
