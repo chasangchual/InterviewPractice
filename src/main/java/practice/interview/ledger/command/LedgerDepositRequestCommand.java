@@ -1,6 +1,6 @@
 package practice.interview.ledger.command;
 
-import practice.interview.ledger.LedgerEventType;
+import practice.interview.ledger.LedgerCommandType;
 import practice.interview.ledger.transaction.UserTransaction;
 
 import java.math.BigDecimal;
@@ -10,7 +10,7 @@ public class LedgerDepositRequestCommand extends LedgerCommand {
     public LedgerDepositRequestCommand(
             UserTransaction userTransaction,
             BigDecimal amount) {
-        super(userTransaction, LedgerEventType.DEPOSIT_REQUESTED);
+        super(userTransaction, LedgerCommandType.DEPOSIT_REQUESTED);
         this.amount = amount;
     }
 

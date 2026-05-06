@@ -1,6 +1,6 @@
 package practice.interview.ledger.transaction;
 
-import practice.interview.ledger.State;
+import practice.interview.ledger.TransactionState;
 import practice.interview.ledger.UserAccount;
 import practice.interview.ledger.UserAccountTransactionType;
 import practice.interview.ledger.command.LedgerCommand;
@@ -14,7 +14,7 @@ public class UserTransaction implements Comparable<UserTransaction>{
     protected final UserAccount userAccount;
     protected final PriorityQueue<LedgerCommand> ledgerCommands;
     protected final UserAccountTransactionType type;
-    protected State state ;
+    protected TransactionState transactionState;
     protected LocalDateTime createdAt;
 
     public UserTransaction(UserAccount userAccount, UserAccountTransactionType type) {
@@ -22,16 +22,16 @@ public class UserTransaction implements Comparable<UserTransaction>{
         this.userAccount = userAccount;
         this.type = type;
         this.ledgerCommands = new PriorityQueue<>();
-        this.state = State.CREATED;
+        this.transactionState = TransactionState.CREATED;
         this.createdAt = LocalDateTime.now();
     }
 
-    public void setState(State state) {
-        this.state = state;
+    public void setState(TransactionState transactionState) {
+        this.transactionState = transactionState;
     }
 
-    public State getState() {
-        return this.state;
+    public TransactionState getState() {
+        return this.transactionState;
     }
 
     public void pushCommand(LedgerCommand command) {

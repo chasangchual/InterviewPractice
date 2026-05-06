@@ -1,6 +1,6 @@
 package practice.interview.ledger;
 
-public enum State {
+public enum TransactionState {
     CREATED,
     PROCESSING,
     COMPLETE,

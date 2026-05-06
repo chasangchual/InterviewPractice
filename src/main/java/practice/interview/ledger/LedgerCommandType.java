@@ -1,6 +1,6 @@
 package practice.interview.ledger;
 
-public enum LedgerEventType {
+public enum LedgerCommandType {
     ACCOUNT_CREATE,
     DEPOSIT_REQUESTED,
     DEPOSIT_CONFIRMED,

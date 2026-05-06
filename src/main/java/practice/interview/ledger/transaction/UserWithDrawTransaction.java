@@ -1,10 +1,8 @@
 package practice.interview.ledger.transaction;
 
-import practice.interview.ledger.State;
+import practice.interview.ledger.TransactionState;
 import practice.interview.ledger.UserAccount;
 import practice.interview.ledger.UserAccountTransactionType;
-import practice.interview.ledger.command.LedgerDepositConfirmCommand;
-import practice.interview.ledger.command.LedgerDepositRequestCommand;
 import practice.interview.ledger.command.LedgerWithdrawConfirmCommand;
 import practice.interview.ledger.command.LedgerWithdrawRequestCommand;
 
@@ -24,14 +22,14 @@ public class UserWithDrawTransaction extends UserTransaction {
 
     public void pushCommand(LedgerWithdrawRequestCommand command) {
         this.ledgerCommands.add(command);
-        this.state = State.PROCESSING;
+        this.transactionState = TransactionState.PROCESSING;
 
         pushCommand(new LedgerWithdrawConfirmCommand(command.getUserTransaction(), command.getAmount()));
     }
 
     public void pushCommand(LedgerWithdrawConfirmCommand command) {
         this.ledgerCommands.add(command);
-        this.state = State.COMPLETE;
+        this.transactionState = TransactionState.COMPLETE;
         // increase user balance
         userAccount.decreaseBalance(amount);
     }

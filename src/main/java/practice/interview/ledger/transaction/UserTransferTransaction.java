@@ -1,6 +1,6 @@
 package practice.interview.ledger.transaction;
 
-import practice.interview.ledger.State;
+import practice.interview.ledger.TransactionState;
 import practice.interview.ledger.UserAccount;
 import practice.interview.ledger.UserAccountTransactionType;
 import practice.interview.ledger.command.*;
@@ -22,28 +22,28 @@ public class UserTransferTransaction extends UserTransaction {
 
     public void pushCommand(LedgerTransferOutRequestCommand command) {
         this.ledgerCommands.add(command);
-        this.state = State.PROCESSING;
+        this.transactionState = TransactionState.PROCESSING;
 
         pushCommand(new LedgerTransferOutConfirmCommand(command.getUserTransaction()), command.getAmount());
     }
 
     public void pushCommand(LedgerTransferOutConfirmCommand command, BigDecimal amount) {
         this.ledgerCommands.add(command);
-        this.state = State.PROCESSING;
+        this.transactionState = TransactionState.PROCESSING;
         fromUserAccount.decreaseBalance(amount);
         pushCommand(new LedgerTransferInRequestCommand(command.getUserTransaction(), amount));
     }
 
     public void pushCommand(LedgerTransferInRequestCommand command) {
         this.ledgerCommands.add(command);
-        this.state = State.PROCESSING;
+        this.transactionState = TransactionState.PROCESSING;
 
         pushCommand(new LedgerTransferInConfirmCommand(command.getUserTransaction(), command.getAmount()));
     }
 
     public void pushCommand(LedgerTransferInConfirmCommand command) {
         this.ledgerCommands.add(command);
-        this.state = State.COMPLETE;
+        this.transactionState = TransactionState.COMPLETE;
         toUserAccount.increaseBalance(amount);
     }
 

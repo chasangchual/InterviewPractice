@@ -1,6 +1,6 @@
 package practice.interview.ledger.command;
 
-import practice.interview.ledger.LedgerEventType;
+import practice.interview.ledger.LedgerCommandType;
 import practice.interview.ledger.transaction.UserTransaction;
 
 import java.time.LocalDateTime;
@@ -9,12 +9,12 @@ import java.util.UUID;
 public class LedgerCommand implements Comparable<LedgerCommand> {
     private final UUID id ;
     private final UserTransaction userTransaction;
-    private final LedgerEventType type;
+    private final LedgerCommandType type;
     private final LocalDateTime createdAt;
 
     public LedgerCommand(
             UserTransaction userTransaction,
-            LedgerEventType type) {
+            LedgerCommandType type) {
         this.id = UUID.randomUUID();
         this.userTransaction = userTransaction;
         this.type = type;
