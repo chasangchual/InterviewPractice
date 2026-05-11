@@ -10,31 +10,21 @@ public class MapOperations {
 
     public static void main(String[] args) {
         Map<Integer, User> users = new HashMap<>();
-        // new User(1, "") is added, then user1 is null
-        User user1 = users.putIfAbsent(1, new User(1, "1"));
-        // Nothing happened. user2 is what is added in the previous step
-        User user2 = users.putIfAbsent(1, new User(1, "2"));
 
-        // user3 is a user object with name "3"
-        User user3 = users.computeIfAbsent(2, k -> new User(k, "3"));
-        // nothing happened. user4 is the same as user 3
-        User user4 = users.computeIfAbsent(2, k -> new User(k, "4"));
+        // getOrDefault() returns the value in the map if the key exists. Or returns the specified default value
+        // Nothing happened inside of the map
+        User user2001 = users.getOrDefault(2001, new User(2001, "John"));
+        user2001 = users.getOrDefault(2001, new User(2001, "John"));
+        users.put(2001, user2001);
 
+        // user2002 is Richard and also Richard is added to the map
+        User user2002 = users.computeIfAbsent(2002, k -> new User(k, "Richard"));
+        // computeIfAbsent returns the value which mapped with the key. user2002 is still Richard
+        user2002 = users.computeIfAbsent(2002, k -> new User(k, "Alex"));
 
-        // user5 is null
-        User user5 = users.computeIfPresent(3, (k , v) -> new User(k, "5"));
-        // user6 is what added in the previous line
-        User user6 = users.computeIfPresent(3, (k , v) -> new User(k, "6"));
-
-        user5 = users.computeIfAbsent(3, k ->new User(k, "5"));
-        user6 = users.computeIfPresent(3, (k , v) -> new User(k, "6"));
-
-        System.out.println(user6.name);
-
-        Map<Integer, List<Integer>> userData = new HashMap<>();
-        userData.computeIfAbsent(101, k-> new ArrayList<>()).add(91);
-        userData.computeIfAbsent(101, k-> new ArrayList<>()).add(92);
-        userData.computeIfAbsent(101, k-> new ArrayList<>()).add(93);
-        userData.computeIfAbsent(101, k-> new ArrayList<>()).add(94);
+        // 2003 is missing and user2003 is null
+        User user2003 = users.computeIfPresent(2003, (k , v) -> new User(k, "Jack"));
+        // user2003 becomes Jack
+        user2003 = users.computeIfPresent(2002, (k , v) -> new User(k, "Jack"));
     }
 }
