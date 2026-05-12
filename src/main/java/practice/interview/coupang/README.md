@@ -28,7 +28,7 @@ Possible statuses are:
 
 PLACED, PAID, ALLOCATED, PICKED, PACKED, SHIPPED, DELIVERED, CANCELLED, REFUNDED
 
-Write a program that finds all orders with an invalid state transition.
+Write a program that finds all orders with an invalid transactionState transition.
 
 Examples of invalid transitions:
 •	DELIVERED before SHIPPED
