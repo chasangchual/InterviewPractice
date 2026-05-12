@@ -13,9 +13,23 @@ public class UserAdClick {
     record AdClick(int addId, long timestamp) {
     }
 
-    public List<Pair<Integer, AdClick>> findTop(int k, List<AdClick> clicks ) {
-        List<Pair<Integer, AdClick>> topK = new ArrayList<>();
-        return topK;
+    public List<Pair<Integer, Integer>> findTop(int k, List<AdClick> clicks) {
+        Map<Integer, Integer> counts = new HashMap<>();
+
+        for (AdClick click : clicks) {
+            counts.put(click.addId, counts.getOrDefault(click.addId, 0) + 1);
+        }
+
+        var sorted = counts.entrySet().stream().sorted((a, b) -> {
+                    int compared = b.getValue().compareTo(a.getValue());
+                    if (compared != 0) {
+                        return compared;
+                    }
+                    return a.getKey().compareTo(b.getKey());
+                })
+                .limit(k).map(e -> Pair.of(e.getKey(), e.getValue())).toList();
+
+        return sorted;
     }
 
     public static void main(String[] args) {
@@ -28,9 +42,9 @@ public class UserAdClick {
 
         UserAdClick userAdClick = new UserAdClick();
 
-        List<Pair<Integer, AdClick>>  found = userAdClick.findTop(5, clicks);
-        for(Pair<Integer, AdClick> click : found) {
-            System.out.print(String.format("%d, %s", click.getLeft(), click.getRight().toString()));
+        List<Pair<Integer, Integer>> found = userAdClick.findTop(5, clicks);
+        for (Pair<Integer, Integer> click : found) {
+            System.out.println(String.format("ad id: %d, count: %d", click.getLeft(), click.getRight()));
         }
     }
 }
