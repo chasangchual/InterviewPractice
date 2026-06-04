@@ -12,15 +12,9 @@ public class RemoveDuplicate {
     record UserLog(Integer id, Integer userId, Integer pageId, LocalDateTime timestamp) {
     }
 
-<<<<<<< Updated upstream
-    public List<Integer> findRoyalCustomer(List<UserLog> userLogs) {
-        return List.of();
-    }
-
-=======
     /**
      * Finds users who visited at least one same page on two consecutive days.
-     *
+     * <p>
      * A "royal customer" is defined here as a user who:
      * 1. has visits on two consecutive dates, and
      * 2. visited at least one common page on both of those dates.
@@ -33,7 +27,7 @@ public class RemoveDuplicate {
                         Stream.concat(existing.stream(), append.stream()).toList()
         ));
 
-        var visitedLogByDateByUser =  visitLogPerUserId.entrySet().stream().collect(Collectors.toMap(
+        var visitedLogByDateByUser = visitLogPerUserId.entrySet().stream().collect(Collectors.toMap(
                 logByUser -> logByUser.getKey(),
                 logByUser -> breakDownUserVisitByDate(logByUser.getValue())
         ));
@@ -46,10 +40,10 @@ public class RemoveDuplicate {
 
     /**
      * Checks whether a user's date-based page visits satisfy the royal customer rule.
-     *
+     * <p>
      * Input structure:
-     *   visitDate -> set of pageIds visited on that date
-     *
+     * visitDate -> set of pageIds visited on that date
+     * <p>
      * The method sorts all visited dates, then checks each pair of neighboring dates.
      * If two neighboring dates are consecutive and share at least one pageId,
      * the user is considered a royal customer.
@@ -58,13 +52,13 @@ public class RemoveDuplicate {
         List<LocalDate> visitedDates = visitedPagesByDate.keySet().stream().sorted((a, b) -> a.compareTo(b)).toList();
         boolean isRoyalCustomer = false;
 
-        for(int i = 0 ; i < visitedDates.size()-1; i++) {
+        for (int i = 0; i < visitedDates.size() - 1; i++) {
             LocalDate curr = visitedDates.get(i);
-            LocalDate next = visitedDates.get(i+1);
-            if(curr.plusDays(1).compareTo(next) == 0) {
+            LocalDate next = visitedDates.get(i + 1);
+            if (curr.plusDays(1).compareTo(next) == 0) {
                 Set<Integer> currVisitedPages = visitedPagesByDate.get(curr);
                 Set<Integer> nextVisitedPages = visitedPagesByDate.get(next);
-                if(currVisitedPages.stream()
+                if (currVisitedPages.stream()
                         .filter(currPage -> nextVisitedPages.contains(currPage))
                         .findFirst()
                         .isPresent()) {
@@ -77,11 +71,11 @@ public class RemoveDuplicate {
 
     /**
      * Converts a user's raw visit logs into a date-based page visit map.
-     *
+     * <p>
      * Example output:
-     *   2026-05-01 -> [10, 20, 30]
-     *   2026-05-02 -> [20, 40]
-     *
+     * 2026-05-01 -> [10, 20, 30]
+     * 2026-05-02 -> [20, 40]
+     * <p>
      * Multiple visits to the same page on the same date are deduplicated by using a Set.
      */
     public Map<LocalDate, Set<Integer>> breakDownUserVisitByDate(List<UserLog> uservisits) {
@@ -90,11 +84,10 @@ public class RemoveDuplicate {
                 visit -> Set.of(visit.pageId),
                 (existingPages, newPages) ->
                         Stream.concat(existingPages.stream(), newPages.stream())
-                        .collect(Collectors.toSet())
+                                .collect(Collectors.toSet())
         ));
     }
 
->>>>>>> Stashed changes
     public static void main(String[] args) {
         List<UserLog> userVisitLogs = new ArrayList<>();
 
