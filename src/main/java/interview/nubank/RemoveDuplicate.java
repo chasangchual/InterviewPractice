@@ -46,8 +46,9 @@ public class RemoveDuplicate {
     }
 
     public List<Integer> findRoyalCustomer(List<UserLog> userLogs) {
-
+        return List.of();
     }
+
     public static void main(String[] args) {
         List<UserLog> userLogs = new ArrayList<>();
 
